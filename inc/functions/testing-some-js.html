@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<pre>
+    Wow, you found this page? Congrats, you stalker.
+
+    - Developers
+
+    Come collect a prize from Stupefystar
+</pre>
+    <script>
+        $('.wysibb-text-editor').mentionsInput({
+            onDataRequest:function (mode, query, callback) {
+                $.ajax({
+                    url: "/forum/inc/user.php",
+                    type: "GET",
+                    dataType : "json",
+                    success:function(responseData){
+                        responseData = _.filter(responseData, function(item) { return item.name.toLowerCase().indexOf(query.toLowerCase()) > -1 });
+                        callback.call(this, responseData);
+                    }
+                });
+            }
+
+        });
+
+        $('.get-syntax-text').click(function() {
+            $('textarea.mention').mentionsInput('val', function(text) {
+                alert(text);
+            });
+        });
+
+        $('.get-mentions').click(function() {
+            $('textarea.mention').mentionsInput('getMentions', function(data) {
+                alert(JSON.stringify(data));
+            });
+        }) ;
+        });
+    </script>
+</body>
+</html>
